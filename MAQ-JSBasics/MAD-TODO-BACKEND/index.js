@@ -1,9 +1,28 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import todoModel from './Schema/schema.js';
+import cors from 'cors';
+import Mongoose  from 'mongoose';
 
 const app = express();
 
-const PORT = 3000;
+//middlewares
+dotenv.config();
+app.use(cors());
+
+app.use(express.json());
+
+const PORT = 3000 || process.env.PORT;
+
+const db = process.env.DB_URL;
+
+Mongoose.connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then (()=> console.log('connected to DB'))
+    .catch(err => console.log(err));
+
+
 
 //get()
 app.get( '/todo', (req,res) => {
@@ -43,7 +62,7 @@ app.get( '/todo', (req,res) => {
 
  //get all todos
 
- app.get('/todos', (req, res) => {
+ app.get('/todos', async (req, res) => {
     
     const allTodos = await todoModel.find({});
         if (allTodos) {
@@ -80,7 +99,7 @@ app.get('/todos/:category', async (req, res) => {
 
 //creating a new todo
 
-app.post('/todo', (req, res) => {
+app.post('/todo', async (req, res) => {
     const {todoTitle, category} = req.body;
     const newTodo = await todoModel.create({
         todoModel,
@@ -95,6 +114,23 @@ app.post('/todo', (req, res) => {
     } else {
         return res.status(500).json( {
             message: 'Error createing Todo'
+        })
+    }
+})
+
+//delete a todo
+app.delete('/todo/:id',async (req, res) =>{
+    const {id} = request.params;
+    const deletedTodo = await todoModel.findByIdAndDelete({id});
+
+    if(deletedTodo) {
+        //success
+        return res.status(200).json({
+            message: 'Todo deleted successfully'
+        })
+    }else{
+        return res.status(500).json({
+            message: 'Error deleting Todo'
         })
     }
 })
