@@ -1,0 +1,29 @@
+{
+  "name": "mad-todo-backend",
+  "version": "1.0.0",
+  "description": "A backend service for a todo mobile app",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/McGrey1097/JavaScript-Basics.git"
+  },
+  "keywords": [
+    "todo"
+  ],
+  "author": "Mark Quainoo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/McGrey1097/JavaScript-Basics/issues"
+  },
+  "homepage": "https://github.com/McGrey1097/JavaScript-Basics#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.1.0",
+    "nodemon": "^2.0.15"
+  }
+}
